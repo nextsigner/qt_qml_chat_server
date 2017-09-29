@@ -16,14 +16,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += chatserver.h \
     websocketclientwrapper.h \
-    websockettransport.h \
-    oc.h
+    websockettransport.h
 
 SOURCES += main.cpp \
     chatserver.cpp \
     websocketclientwrapper.cpp \
-    websockettransport.cpp \
-    oc.cpp
+    websockettransport.cpp
 
 
 RESOURCES += qml.qrc

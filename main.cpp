@@ -1,3 +1,12 @@
+/*
+Este código ha sido creado por nextsigner@gmail.com
+Es un proyecto de Aplicación Demo para comprender el funcionamiento de QWebChannel.
+Este código ha sido descargado de https:/github.com/nextsignger/qt_qml_chat_server.git
+
+Its code was created by nextsigner@gmail.com
+Its a project of Demo Application for understand the functions of QWebChannel.
+This code was downloaded of https:/github.com/nextsignger/qt_qml_chat_server.git
+*/
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -9,9 +18,6 @@
 #include "websockettransport.h"
 
 #include <QtWebSockets/QWebSocketServer>
-
-#include "oc.h"
-
 
 
 int main(int argc, char *argv[])
@@ -39,8 +45,6 @@ int main(int argc, char *argv[])
     ChatServer* chatserver = new ChatServer(&app);
     channel.registerObject(QStringLiteral("chatserver"), chatserver);
 
-    //OC oc;
-    //oc.setClientWrapper(&clientWrapper);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("cs", chatserver);

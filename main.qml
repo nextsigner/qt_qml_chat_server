@@ -1,74 +1,93 @@
-import QtQuick 2.7
+import QtQuick 2.2
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.3
 import Qt.WebSockets 1.0
-//import ObjectC11 1.0
 
 ApplicationWindow {
     visible: true
     width: 640
     height: 480
     title: qsTr("qt_qml_chat_server by nextsigner")
-    property var ocw: cw
-    //    OC{
-    //        id: oc
-    //    }
     Connections {
         target: cw
         onClientConnected:{
-            console.log("Cliente conectado!!!!!")
-            //cw.usersList
+            console.log("A new client connected.")
         }
-
     }
     Connections {
         target: cs
         onUserListChanged:{
-            console.log("Cliente Count 1 : "+cs.userList)
             listModelUser.updateUserList()
         }
         onNewMessage:{
-                listModelMsg.addMsg(msg)
+            listModelMsg.addMsg('['+time+']'+user+':'+msg)
         }
     }
-    Row{
+    Column{
         anchors.fill: parent
         Rectangle{
-            width: parent.width*0.7
-            height: parent.height
-            border.width: 1
-            Rectangle{
-                width: parent.width
-                height: 28
-                color: "black"
-                Text {
-                    text: "<b>Messages</b>"
-                    font.pixelSize: 24
-                    anchors.centerIn: parent
-                    color: "white"
+            width: parent.width
+            height: 28
+            Text {
+                id: txtTit
+                property int nt: 0
+                property var titles:["Its is a <b>SERVER</b> - only received message from qt_qml_chat_client", "Download from github qt_qml_chat_client for send a message here", "This server and the client app is connected in ws://localhost:12345 "]
+                text: txtTit.titles[0]
+                font.pixelSize: parent.width*0.025
+                anchors.centerIn: parent
+                Timer{
+                    running: true
+                    repeat: true
+                    interval: 3500
+                    onTriggered: {
+                        if(txtTit.nt<2){
+                            txtTit.nt++
+                        }else{
+                            txtTit.nt =0;
+                        }
+                        txtTit.text = txtTit.titles[txtTit.nt]
+                    }
                 }
             }
-            ListView{id:msgListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelMsg; delegate: delegateMsg;}
         }
-        Rectangle{
-            width: parent.width*0.3
-            height: parent.height
-            border.width: 1
+        Row{
+            width: parent.width
+            height: parent.height-28
             Rectangle{
-                width: parent.width
-                height: 28
-                color: "black"
-                Text {
-                    text: "<b>User List</b>"
-                    font.pixelSize: 24
-                    anchors.centerIn: parent
-                    color: "white"
+                width: parent.width*0.7
+                height: parent.height
+                border.width: 1
+                Rectangle{
+                    width: parent.width
+                    height: 28
+                    color: "black"
+                    Text {
+                        text: "<b>Messages</b>"
+                        font.pixelSize: 24
+                        anchors.centerIn: parent
+                        color: "white"
+                    }
                 }
+                ListView{id:msgListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelMsg; delegate: delegateMsg;}
             }
-            ListView{id:userListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelUser; delegate: delegateUser;}
+            Rectangle{
+                width: parent.width*0.3
+                height: parent.height
+                border.width: 1
+                Rectangle{
+                    width: parent.width
+                    height: 28
+                    color: "black"
+                    Text {
+                        text: "<b>User List</b>"
+                        font.pixelSize: 24
+                        anchors.centerIn: parent
+                        color: "white"
+                    }
+                }
+                ListView{id:userListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelUser; delegate: delegateUser;}
+            }
         }
     }
-
     ListModel{
         id: listModelUser
         function createElement(u){
@@ -92,7 +111,7 @@ ApplicationWindow {
             }
         }
         function addMsg(msg){
-             append(createElement(msg))
+            append(createElement(msg))
         }
     }
     Component{
@@ -102,8 +121,9 @@ ApplicationWindow {
             height: 24
             border.width: 1
             color: "#cccccc"
-            radius: height*0.25
+            radius: 6
             anchors.horizontalCenter: parent.horizontalCenter
+            clip:true
             Text {
                 text: "<b>"+user+"</b>"
                 font.pixelSize: 20
@@ -118,8 +138,9 @@ ApplicationWindow {
             height: txtMsg.contentHeight
             border.width: 1
             color: "#cccccc"
-            radius: height*0.25
+            radius: 6
             anchors.horizontalCenter: parent.horizontalCenter
+            clip:true
             Text {
                 id: txtMsg
                 width: parent.width-48
@@ -132,7 +153,7 @@ ApplicationWindow {
         }
     }
     Component.onCompleted: {
-            listModelUser.updateUserList()
+        listModelUser.updateUserList()
     }
 
 
