@@ -155,6 +155,4 @@ ApplicationWindow {
     Component.onCompleted: {
         listModelUser.updateUserList()
     }
-
-
 }
