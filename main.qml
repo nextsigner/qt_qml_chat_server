@@ -56,6 +56,7 @@ ApplicationWindow {
                 width: parent.width*0.7
                 height: parent.height
                 border.width: 1
+                clip: true
                 Rectangle{
                     width: parent.width
                     height: 28
@@ -67,12 +68,13 @@ ApplicationWindow {
                         color: "white"
                     }
                 }
-                ListView{id:msgListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelMsg; delegate: delegateMsg;}
+                ListView{id:msgListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; clip: true; model: listModelMsg; delegate: delegateMsg;}
             }
             Rectangle{
                 width: parent.width*0.3
                 height: parent.height
                 border.width: 1
+                clip: true
                 Rectangle{
                     width: parent.width
                     height: 28
@@ -84,7 +86,7 @@ ApplicationWindow {
                         color: "white"
                     }
                 }
-                ListView{id:userListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; model: listModelUser; delegate: delegateUser;}
+                ListView{id:userListView;width: parent.width; height: parent.height-28; y:28; spacing: 10; clip: true; model: listModelUser; delegate: delegateUser;}
             }
         }
     }
@@ -112,6 +114,7 @@ ApplicationWindow {
         }
         function addMsg(msg){
             append(createElement(msg))
+            msgListView.currentIndex = count-1
         }
     }
     Component{

@@ -4,7 +4,7 @@ QT       -= gui
 CONFIG += c++11
 
 linux:{
-    DESTDIR = ../qt_qml_chat_server/build_linux
+    DESTDIR = ../qt_qml_chat_server/qt_qml_chat_server
 }
 
 # The following define makes your compiler emit warnings if you use
